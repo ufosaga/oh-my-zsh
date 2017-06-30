@@ -12,8 +12,14 @@ YS_VCS_PROMPT_SUFFIX="%{$reset_color%}"
 YS_VCS_PROMPT_DIRTY=" %{$fg[red]%}x"
 YS_VCS_PROMPT_CLEAN=" %{$fg[green]%}o"
 
+
+function git_prompt_info_ex() {
+ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
+}
+
 # Git info
-local git_info='$(git_prompt_info)'
+local git_info='$(git_prompt_info_ex)'
 ZSH_THEME_GIT_PROMPT_PREFIX="${YS_VCS_PROMPT_PREFIX1}git${YS_VCS_PROMPT_PREFIX2}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="$YS_VCS_PROMPT_SUFFIX"
 ZSH_THEME_GIT_PROMPT_DIRTY="$YS_VCS_PROMPT_DIRTY"
@@ -47,7 +53,7 @@ local exit_code="%(?,,C:%{$fg[red]%}%?%{$reset_color%})"
 # % ys @ ys-mbp in ~/.oh-my-zsh on git:master x [21:47:42] C:0
 # $
 PROMPT="
-%{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
+%{$terminfo[bold]$fg[blue]%}%{$reset_color%}\
 %(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n) \
 %{$fg[white]%}@ \
 %{$fg[green]%}%m \
@@ -56,5 +62,5 @@ PROMPT="
 ${hg_info}\
 ${git_info}\
  \
-%{$fg[white]%}[%*] $exit_code
-%{$terminfo[bold]$fg[red]%}$ %{$reset_color%}"
+ $exit_code
+%{$terminfo[bold]$fg[yellow]%}>%{$reset_color%}%{$terminfo[bold]$fg[red]%}>%{$reset_color%}%{$terminfo[bold]$fg[green]%}>%{$reset_color%} "
