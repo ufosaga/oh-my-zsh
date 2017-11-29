@@ -6,7 +6,12 @@
 # Fully supports screen, iterm, and probably most modern xterm and rxvt
 # (In screen, only short_tab_title is used)
 # Limited support for Apple Terminal (Terminal can't set window and tab separately)
-function title {
+fucntion title()
+{
+     who >/dev/null
+}
+
+function title1 {
   emulate -L zsh
   setopt prompt_subst
 
